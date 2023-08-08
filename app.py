@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -31,6 +31,43 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+
+@app.route("/create", methods=["GET", "POST"])
+def create_post():
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        post = Post(title=title, content=content)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("create_post.html")
+
+
+@app.route("/post/<int:id>")
+def post_detail(id):
+    post = Post.query.get_or_404(id)
+    return render_template("post_detail.html", post=post)
+
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit_post(id):
+    post = Post.query.get_or_404(id)
+    if request.method == "POST":
+        post.title = request.form["title"]
+        post.content = request.form["content"]
+        db.session.commit()
+        return redirect(url_for("post_detail", id=id))
+    return render_template("edit_post.html", post=post)
+
+
+@app.route("/delete/<int:id>")
+def delete_post(id):
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":

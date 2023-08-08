@@ -1,0 +1,33 @@
+{% extends "layout.html" %} {% block title %}Create Post - My Blog{% endblock %}
+{% block content %}
+<h1 class="text-4xl text-center mt-4">Create a New Post</h1>
+<form
+  action="{{ url_for('create_post') }}"
+  method="post"
+  class="max-w-2xl mx-auto mt-8"
+>
+  <div class="mb-4">
+    <label for="title" class="block text-lg mb-2">Title:</label>
+    <input
+      type="text"
+      name="title"
+      id="title"
+      class="w-full p-2 border rounded"
+      required
+    />
+  </div>
+  <div class="mb-4">
+    <label for="content" class="block text-lg mb-2">Content:</label>
+    <textarea
+      name="content"
+      id="content"
+      rows="10"
+      class="w-full p-2 border rounded"
+      required
+    ></textarea>
+  </div>
+  <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+    Publish
+  </button>
+</form>
+{% endblock %}
