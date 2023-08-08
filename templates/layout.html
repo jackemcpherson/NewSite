@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>{% block title %}My Blog{% endblock %}</title>
+  </head>
+  <body>
+    <nav class="bg-blue-500 p-4 text-white">
+      <a href="/" class="px-2">Home</a>
+      <a href="/about" class="px-2">About Me</a>
+      <a href="/contact" class="px-2">Contact</a>
+    </nav>
+    <div class="container mx-auto mt-8">{% block content %}{% endblock %}</div>
+    <footer class="bg-gray-200 p-4 text-center">© {{ year }} My Blog</footer>
+  </body>
+</html>

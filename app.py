@@ -3,8 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 db = SQLAlchemy(app)
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,13 +16,24 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
+
 @app.route("/")
 def home():
     posts = Post.query.order_by(Post.date_posted.desc()).all()
     return render_template("home.html", posts=posts)
 
-if __name__ == '__main__':
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
+if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
